@@ -1,5 +1,6 @@
 version: 2
 updates:
+  # 监控 GitHub Actions 工作流依赖（你原来的配置）
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -8,3 +9,29 @@ updates:
       time: "06:00"
     pull-request-branch-name:
       separator: "-"
+    labels:
+      - "deps"
+      - "github-actions"
+    commit-message:
+      prefix: "deps(actions)"
+    reviewers:
+      - diyros
+    allow:
+      - dependency-type: "all"
+
+  # 监控 NPM package.json 依赖（新增）
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      timezone: "Asia/Shanghai"
+      time: "06:00"
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - "deps"
+      - "npm"
+    commit-message:
+      prefix: "deps(npm)"
+    allow:
+      - dependency-type: "production"
